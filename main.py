@@ -18,7 +18,7 @@ from collections import deque
 
 # ─── Configuration ────────────────────────────────────────────────────────────
 DERIV_TOKEN = os.environ.get("DERIV_DEMO_TOKEN")
-DERIV_APP_ID = os.environ.get("DERIV_APP_ID")
+DERIV_APP_ID = os.environ.get("DERIV_APP_ID", "1089")  # 1089 is Deriv test app ID
 NVIDIA_API_KEY = os.environ.get("NVIDIA_API_KEY")
 
 # Synthetic indices to trade
