@@ -299,8 +299,9 @@ class DerivBot:
         return self.req_id
 
     async def send(self, payload):
-        if self.ws:
-            await self.ws.send(json.dumps(payload))
+        ws = self.ws
+        if ws:
+            await ws.send(json.dumps(payload))
 
     async def authorize(self):
         token = os.environ.get("DERIV_DEMO_TOKEN")
