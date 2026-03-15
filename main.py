@@ -290,6 +290,11 @@ class DerivBot:
         await self.ws.send(json.dumps(payload))
 
     async def authorize(self):
+        if not DERIV_TOKEN:
+            print("[ERROR] No token provided. Set DERIV_DEMO_TOKEN variable.")
+            return
+        token_preview = DERIV_TOKEN[:4] + "****"
+        print(f"[AUTH] Attempting auth with token: {token_preview}")
         await self.send({
             "authorize": DERIV_TOKEN,
             "req_id": self.next_id()
@@ -361,7 +366,13 @@ class DerivBot:
 
         if msg_type == "authorize":
             if data.get("error"):
-                print(f"[ERROR] Auth failed: {data['error']['message']}")
+                error_msg = data['error']['message']
+                error_code = data['error'].get('code', 'unknown')
+                print(f"[ERROR] Auth failed: {error_msg}")
+                print(f"[ERROR] Error code: {error_code}")
+                print(f"[ERROR] Make sure you are using a VIRTUAL/DEMO account token")
+                print(f"[ERROR] Go to app.deriv.com, switch to Virtual account,")
+                print(f"[ERROR] then go to Settings > API Token to create a new token")
                 return
             self.authorized = True
             account = data["authorize"]
